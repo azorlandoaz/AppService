@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');
 var path    = require("path");
 
 var app = express();
-var port = 8080;
+app.set('port', (process.env.PORT || 5000));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -16,9 +16,15 @@ app.get('/',function(req,res){
   res.sendFile(path.join(__dirname+'/Public/Views/Login.html'));
 });*/
 
-var service = require('./service.js');
+/*var service = require('./service.js');
 
-app.get('/prueba',service.create);
+app.get('/prueba',service.create);*/
 
-http.createServer(app).listen(port);
+app.get('/', function(request, response) {
+  response.sendFile(path.join(__dirname+'/Public/Views/Login.html'));
+});
+
+app.listen(app.get('port'), function() {
+  console.log('Node app is running on port', app.get('port'));
+});
 console.log("Servidor activo por el puerto " + port);
